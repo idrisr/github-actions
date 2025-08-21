@@ -98,8 +98,41 @@ data Event =
     | PullRequest
     | Schedule String
     | ManualDispatch
-deriving (Show, Eq)
 \end{haskell}
+
+\begin{table}[h]
+	\centering
+	\rowcolors{2}{gray!10}{white}
+	\begin{tabular}{ll}
+		\toprule
+		\textbf{event}                & \textbf{trigger description}          \\
+		\midrule
+		\texttt{push}                 & any push to a branch or tag           \\
+		\texttt{pull\_request}        & opened, synchronized, or closed pr    \\
+		\texttt{workflow\_dispatch}   & manual trigger from ui or api         \\
+		\texttt{repository\_dispatch} & external/custom trigger via api       \\
+		\texttt{schedule}             & cron-like scheduled run               \\
+		\texttt{release}              & published, edited, or deleted release \\
+		\texttt{issue\_comment}       & comment added to an issue or pr       \\
+		\texttt{issues}               & issue opened, edited, closed, etc.    \\
+		\texttt{create}               & branch or tag created                 \\
+		\texttt{delete}               & branch or tag deleted                 \\
+		\texttt{fork}                 & repository forked                     \\
+		\texttt{watch}                & user stars a repository               \\
+		\texttt{workflow\_run}        & another workflow completes            \\
+		\texttt{deployment}           & deployment event occurs               \\
+		\texttt{deployment\_status}   & deployment status updates             \\
+		\texttt{page\_build}          & github pages site is built            \\
+		\texttt{package}              & package published or updated          \\
+		\texttt{registry\_package}    & container/registry package activity   \\
+		\texttt{discussion}           & discussion created, answered, etc.    \\
+		\texttt{discussion\_comment}  & comment on a discussion               \\
+		\texttt{check\_run}           & check run is created or completed     \\
+		\texttt{check\_suite}         & check suite activity                  \\
+		\bottomrule
+	\end{tabular}
+	\caption{Events that can trigger GitHub Actions workflows}
+\end{table}
 
 \chapter{Job}
 
