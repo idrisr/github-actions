@@ -2,11 +2,12 @@ name: build-pdf
 
 on:
   push:
-    tags:
-      - '*'
+    branches: [ main ]
 
 permissions:
-  contents: write   # <-- allow creating releases
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
@@ -20,9 +21,20 @@ jobs:
       - name: Build PDF
         run: nix build .#doc
 
-      - name: upload release
-        uses: softprops/action-gh-release@v2
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          files: result/*.pdf
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: result
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
