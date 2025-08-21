@@ -21,8 +21,8 @@ let
 in
 
 stdenvNoCC.mkDerivation {
-  name = "change name";
-  pname = "change name";
+  name = "github notes";
+  pname = "github notes";
   src = ./src;
   nativeBuildInputs = [ mytex python312Packages.pygments pkgs.biber ];
   buildPhase = ''
@@ -30,6 +30,6 @@ stdenvNoCC.mkDerivation {
   '';
   installPhase = ''
     mkdir -p $out
-    mv build/00-main.pdf $out/
+    mv build/00-main.pdf $out/github.pdf
   '';
 }
