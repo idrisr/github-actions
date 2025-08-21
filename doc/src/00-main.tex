@@ -1,0 +1,105 @@
+\documentclass[openany, 12pt]{book}
+\input{preamble}
+\title{My Great Document}
+\author{Idris}
+\date{August 2025}
+
+%chktex-file 1
+% chktex-file 2999999
+
+\input{glossary}
+\makeglossaries
+
+\begin{document}
+
+\tableofcontents
+
+\chapter{Workflow}
+
+\begin{haskell}{}
+-- a workflow is triggered by events and consists of jobs
+data Workflow = Workflow
+  { workflowName :: String
+  , workflowOn   :: [Event]
+  , workflowJobs :: [Job]
+  }
+\end{haskell}
+
+\chapter{Event}
+\begin{haskell}{}
+-- triggering events
+data Event =
+      Push
+    | PullRequest
+    | Schedule String
+    | ManualDispatch
+deriving (Show, Eq)
+\end{haskell}
+
+\chapter{Job}
+A job is like one shell invocation.
+
+\begin{haskell}{}
+-- a job runs on a runner and is made up of steps
+data Job = Job
+  { jobName   :: String
+  , jobRunsOn :: Runner
+  , jobMatrix :: Maybe JobMatrix
+  , jobSteps  :: [Step]
+  }
+\end{haskell}
+
+\chapter{Job Matrix}
+\begin{haskell}{}
+-- matrix expansion for jobs
+data JobMatrix = JobMatrix
+  { matrixValues :: [(String, [String])]
+  }
+\end{haskell}
+
+\chapter{Step}
+\begin{haskell}{}
+-- a step runs either shell commands or an action
+data Step
+  = Run String
+  | Uses Action
+
+-- reusable action
+data Action = Action
+  { actionName :: String
+  , actionRepo :: String
+  , actionRef  :: String
+  }
+\end{haskell}
+
+\chapter{Runner}
+\begin{haskell}{}
+-- runner types
+data Runner
+    = UbuntuLatest
+    | WindowsLatest
+    | MacOSLatest
+    | SelfHosted [String] -- labels
+deriving (Show, Eq)
+
+-- extras
+data Secrets   = Secrets   [(String, String)]
+data Variables = Variables [(String, String)]
+data Context   = Context    [(String, String)]
+data Artifact  = Artifact
+    { artifactName :: String,
+      artifactPath :: FilePath }
+data Cache     = Cache
+    { cacheKey :: String,
+      cachePath :: FilePath }
+\end{haskell}
+
+\begin{enumerate}[label = {(\arabic*)}]
+	\item pages
+	\item workflow run – an execution instance of a workflow.
+	\item secrets / variables – configuration values injected into jobs.
+	\item context / expression syntax – github, env, matrix, etc. used inside YAML.
+	\item artifacts / cache – storage/reuse of files across steps and jobs.
+\end{enumerate}
+
+\end{document}
