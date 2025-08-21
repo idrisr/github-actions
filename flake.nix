@@ -8,6 +8,9 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in
       {
-        packages = { default = pkgs.callPackage ./doc { }; };
+        packages = rec {
+          doc = pkgs.callPackage ./doc { };
+          default = doc;
+        };
       });
 }
