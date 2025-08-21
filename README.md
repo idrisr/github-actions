@@ -3,6 +3,8 @@
 These are my notes to explain the github surface area of actions, cli app, and
 api to myself. You might also find it useful.
 
+[download the pdf](https://idrisraja.com/github-actions/github.pdf)
+
 ## Building
 
 ```
